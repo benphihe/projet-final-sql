@@ -3,41 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees</title>
+    <title>Employees Manager</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Employees</h1>
-    <table id="employees-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Phone Number</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
+    <header>
+        <h1>Employees Manager</h1>
+    </header>
+    <main>
+        <h2>Employees List</h2>
+        <div>
+            <input type="text" id="search-bar" placeholder="Search by last name">
+            <button id="sort-asc">Sort by Last Name (A-Z)</button>
+            <button id="sort-desc">Sort by Last Name (Z-A)</button>
+            <button onclick="window.location.href='/insert'">Ajouter un Employé</button>
+        </div>
+        <div class="container">
+            <table id="employees-table">
+                <thead>
+                    <tr>
+                        <th class="left">Last Name</th>
+                        <th class="right">First Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div id="employee-details" class="employee-details">
+                <h3>Employee Details</h3>
+                <p id="employee-name">Name: </p>
+                <p id="employee-gender">Gender: </p>
+                <p id="employee-phone">Phone: </p>
+                <p id="employee-salary">Salary: </p>
+                <p id="employee-position">Position: </p>
+                <p id="employee-country">Country: </p>
+                <p id="employee-city">City: </p>
+                <p id="employee-street1">Street: </p>
+                <p id="employee-appartement">Apartment: </p> 
+                <p id="employee-start-date">Start Date: </p> 
+                <p id="employee-end-date">End Date: </p> 
+            </div>
             
-        </tbody>
-    </table>
+            
+            
+        </div>
+    </main>
     <script>
-        fetch('/api/employees')
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector('#employees-table tbody');
-                data.forEach(employee => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${employee.employeName}</td>
-                        <td>${employee.employeGender}</td>
-                        <td>${employee.employePhoneNumber}</td>
-                        <td>${employee.employeSalary}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching employee data:', error));
+        function fetchEmployees(order = 'asc', search = '') {
+            fetch(`/api/employees?order=${order}&search=${search}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#employees-table tbody');
+                    tableBody.innerHTML = ''; 
+                    data.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="left">${employee.employeeLastName}</td>
+                            <td class="right">${employee.employeeFirstName}</td>
+                        `;
+                        row.addEventListener('click', () => showEmployeeDetails(employee));
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching employee data:', error));
+        }
+
+        function showEmployeeDetails(employee) {
+            document.getElementById('employee-name').textContent = `Name: ${employee.employeeFirstName} ${employee.employeeLastName}`;
+            document.getElementById('employee-gender').textContent = `Gender: ${employee.employeeGender || 'N/A'}`;
+            document.getElementById('employee-phone').textContent = `Phone: ${employee.employeePhoneNumber || 'N/A'}`;
+        
+            
+            const employeeSalary = employee.Salary ? employee.Salary.toFixed(2) : 'N/A'; // Formatage du salaire
+            document.getElementById('employee-salary').textContent = `Salary: €${employeeSalary}`;
+            document.getElementById('employee-position').textContent = `Position: ${employee.PositionTitle || 'N/A'}`;
+        
+            
+            document.getElementById('employee-country').textContent = `Country: ${employee.employeeCountry || 'N/A'}`;
+            document.getElementById('employee-city').textContent = `City: ${employee.employeeCity || 'N/A'}`;
+            document.getElementById('employee-street1').textContent = `Street: ${employee.employeeStreet1 || 'N/A'}`;
+            document.getElementById('employee-appartement').textContent = `Apartment: ${employee.employeeAppartement || 'N/A'}`; 
+        
+            document.getElementById('employee-start-date').textContent = `Start Date: ${employee.employeeStartDate || 'N/A'}`;
+            document.getElementById('employee-end-date').textContent = `End Date: ${employee.employeeEndDate || 'N/A'}`;
+        }
+        
+        
+        
+
+        document.getElementById('sort-asc').addEventListener('click', () => {
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees('asc', search);
+        });
+
+        document.getElementById('sort-desc').addEventListener('click', () => {
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees('desc', search);
+        });
+
+        document.getElementById('search-bar').addEventListener('input', () => {
+            const order = document.querySelector('button.active')?.id === 'sort-desc' ? 'desc' : 'asc';
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees(order, search);
+        });
+
+        fetchEmployees();
     </script>
 </body>
 </html>
