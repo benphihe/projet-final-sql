@@ -27,15 +27,17 @@ app.get('/employees.html', (req, res) => {
 
 app.get('/api/employees', (req, res) => {
     const order = req.query.order === 'desc' ? 'DESC' : 'ASC';
+    const search = req.query.search ? `%${req.query.search}%` : '%';
     const sql = `
         SELECT 
             e.lastName AS employeeLastName,
             e.firstName AS employeeFirstName
         FROM employees e
+        WHERE e.lastName LIKE ?
         ORDER BY e.lastName ${order}
     `;
 
-    db.all(sql, [], (err, rows) => {
+    db.all(sql, [search], (err, rows) => {
         if (err) {
             console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
             res.status(500).json({ error: err.message });

@@ -13,23 +13,34 @@
     <main>
         <h2>Employees List</h2>
         <div>
+            <input type="text" id="search-bar" placeholder="Search by last name">
             <button id="sort-asc">Sort by Last Name (A-Z)</button>
             <button id="sort-desc">Sort by Last Name (Z-A)</button>
         </div>
-        <table id="employees-table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="container">
+            <table id="employees-table">
+                <thead>
+                    <tr>
+                        <th class="left">Last Name</th>
+                        <th class="right">First Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Employee data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+            <div id="employee-details" class="employee-details">
+                <h3>Employee Details</h3>
+                <p id="employee-name">Name: </p>
+                <p id="employee-gender">Gender: </p>
+                <p id="employee-phone">Phone: </p>
+                <p id="employee-salary">Salary: </p>
+            </div>
+        </div>
     </main>
     <script>
-        function fetchEmployees(order = 'asc') {
-            fetch(`/api/employees?order=${order}`)
+        function fetchEmployees(order = 'asc', search = '') {
+            fetch(`/api/employees?order=${order}&search=${search}`)
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.querySelector('#employees-table tbody');
@@ -37,18 +48,40 @@
                     data.forEach(employee => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
-                            <td>${employee.employeeFirstName}</td>
-                            <td>${employee.employeeLastName}</td>
+                            <td class="left">${employee.employeeLastName}</td>
+                            <td class="right">${employee.employeeFirstName}</td>
                         `;
+                        row.addEventListener('click', () => showEmployeeDetails(employee));
                         tableBody.appendChild(row);
                     });
                 })
                 .catch(error => console.error('Error fetching employee data:', error));
         }
 
-        document.getElementById('sort-asc').addEventListener('click', () => fetchEmployees('asc'));
-        document.getElementById('sort-desc').addEventListener('click', () => fetchEmployees('desc'));
-        
+        function showEmployeeDetails(employee) {
+            document.getElementById('employee-name').textContent = `Name: ${employee.employeeFirstName} ${employee.employeeLastName}`;
+            document.getElementById('employee-gender').textContent = `Gender: ${employee.employeeGender || 'N/A'}`;
+            document.getElementById('employee-phone').textContent = `Phone: ${employee.employeePhoneNumber || 'N/A'}`;
+            document.getElementById('employee-salary').textContent = `Salary: ${employee.employeeSalary || 'N/A'}`;
+        }
+
+        document.getElementById('sort-asc').addEventListener('click', () => {
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees('asc', search);
+        });
+
+        document.getElementById('sort-desc').addEventListener('click', () => {
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees('desc', search);
+        });
+
+        document.getElementById('search-bar').addEventListener('input', () => {
+            const order = document.querySelector('button.active')?.id === 'sort-desc' ? 'desc' : 'asc';
+            const search = document.getElementById('search-bar').value;
+            fetchEmployees(order, search);
+        });
+
+        // Fetch employees with default order on page load
         fetchEmployees();
     </script>
 </body>

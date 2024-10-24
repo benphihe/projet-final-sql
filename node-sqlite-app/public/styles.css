@@ -55,10 +55,22 @@ button {
     cursor: pointer;
 }
 
+input[type="text"] {
+    margin: 10px;
+    padding: 10px;
+    font-size: 1em;
+    width: 200px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
 table {
-    width: 100%;
+    width: 33.33%; /* One third of the page width */
+    margin: 20px 0;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 th, td {
@@ -69,4 +81,19 @@ th, td {
 
 th {
     background-color: #e9ecef;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+.employee-details {
+    width: 45%; 
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    background-color: #f8f9fa;
 }
