@@ -15,26 +15,25 @@ const db = new sqlite3.Database('./data.db', (err) => {
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/insert', (req, res) => {
-  const { firstName, lastName, gender, phoneNumber, country, city, street1, street2, appartement, postId } = req.body;
-
-  db.run(`INSERT INTO adresses (country, city, street1, street2, appartement) VALUES (?, ?, ?, ?, ?)`, [country, city, street1, street2, appartement], (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Erreur lors de l\'insertion des données');
-    } else {
+    const { firstName, lastName, gender, phoneNumber, country, city, street1, appartement, postId } = req.body;
+    
+    db.run(`INSERT INTO adresses (country, city, street1, appartement) VALUES (?, ?, ?, ?)`, [country, city, street1, appartement], function(err) {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Erreur lors de l\'insertion des données d\'adresse');
+      }
+      
       const adressId = this.lastID;
-
+  
       db.run(`INSERT INTO employees (firstName, lastName, gender, phoneNumber, adressId, postId) VALUES (?, ?, ?, ?, ?, ?)`, [firstName, lastName, gender, phoneNumber, adressId, postId], (err) => {
         if (err) {
           console.error(err);
-          res.status(500).send('Erreur lors de l\'insertion des données');
-        } else {
-          res.send('Données insérées avec succès');
+          return res.status(500).send('Erreur lors de l\'insertion des données d\'employé');
         }
+        res.send('Données insérées avec succès');
       });
-    }
+    });
   });
-});
 
 app.get('/posts', (req, res) => {
   db.all('SELECT postId, PositionTitle FROM posts', (err, rows) => {
@@ -79,7 +78,6 @@ app.get('/api/employees', (req, res) => {
     });
 });
 
-// Démarrer le serveur
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
 });

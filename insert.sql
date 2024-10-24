@@ -5,7 +5,7 @@ CREATE TABLE departements (
 );
 
 CREATE TABLE posts (
-    postId TEXT PRIMARY KEY,
+    postId INTEGER PRIMARY KEY AUTOINCREMENT,
     Salary REAL,
     PositionTitle TEXT
 );
@@ -18,25 +18,24 @@ CREATE TABLE employements (
 );
 
 CREATE TABLE employees (
-    employeId VARCHAR(10) PRIMARY KEY,
-    departementId VARCHAR(10),
+    employeId INTEGER PRIMARY KEY AUTOINCREMENT,
+    departementId INTEGER,
     adressId VARCHAR(10),
-    postId VARCHAR(10),
+    postId INTEGER,
     firstName VARCHAR(50),
     lastName VARCHAR(50),
     gender CHAR(1),
-    phoneNumber VARCHAR(15)
+    phoneNumber VARCHAR(15),
     FOREIGN KEY (departementId) REFERENCES departement(departementId),
     FOREIGN KEY (adressId) REFERENCES adress(adressId),
     FOREIGN KEY (postId) REFERENCES employement(postId)
 );
 
 CREATE TABLE adresses (
-    adressId TEXT PRIMARY KEY,
+    adressId INTEGER PRIMARY KEY AUTOINCREMENT,
     country TEXT,
     city TEXT,
     street1 TEXT,
-    street2 TEXT,
     appartement TEXT
 );
 
