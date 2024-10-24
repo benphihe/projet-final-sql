@@ -2,7 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const db = new sqlite3.Database('./data.db', (err) => {
     if (err) {
@@ -31,8 +31,21 @@ app.get('/api/employees', (req, res) => {
     const sql = `
         SELECT 
             e.lastName AS employeeLastName,
-            e.firstName AS employeeFirstName
+            e.firstName AS employeeFirstName,
+            e.gender AS employeeGender,
+            e.phoneNumber AS employeePhoneNumber,
+            p.PositionTitle,
+            p.Salary,
+            a.country AS employeeCountry,
+            a.city AS employeeCity,
+            a.street1 AS employeeStreet1,
+            a.appartement AS employeeAppartement,
+            emp.startDate AS employeeStartDate,
+            emp.endDate AS employeeEndDate
         FROM employees e
+        JOIN posts p ON e.postId = p.postId
+        JOIN adresses a ON e.adressId = a.adressId
+        JOIN employements emp ON e.postId = emp.postId
         WHERE e.lastName LIKE ?
         ORDER BY e.lastName ${order}
     `;
@@ -47,6 +60,7 @@ app.get('/api/employees', (req, res) => {
         res.json(rows);
     });
 });
+
 
 
 app.listen(port, () => {

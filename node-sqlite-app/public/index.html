@@ -26,7 +26,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Employee data will be inserted here by JavaScript -->
                 </tbody>
             </table>
             <div id="employee-details" class="employee-details">
@@ -35,7 +34,17 @@
                 <p id="employee-gender">Gender: </p>
                 <p id="employee-phone">Phone: </p>
                 <p id="employee-salary">Salary: </p>
+                <p id="employee-position">Position: </p>
+                <p id="employee-country">Country: </p>
+                <p id="employee-city">City: </p>
+                <p id="employee-street1">Street: </p>
+                <p id="employee-appartement">Apartment: </p> 
+                <p id="employee-start-date">Start Date: </p> 
+                <p id="employee-end-date">End Date: </p> 
             </div>
+            
+            
+            
         </div>
     </main>
     <script>
@@ -44,7 +53,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.querySelector('#employees-table tbody');
-                    tableBody.innerHTML = ''; // Clear existing rows
+                    tableBody.innerHTML = ''; 
                     data.forEach(employee => {
                         const row = document.createElement('tr');
                         row.innerHTML = `
@@ -62,8 +71,24 @@
             document.getElementById('employee-name').textContent = `Name: ${employee.employeeFirstName} ${employee.employeeLastName}`;
             document.getElementById('employee-gender').textContent = `Gender: ${employee.employeeGender || 'N/A'}`;
             document.getElementById('employee-phone').textContent = `Phone: ${employee.employeePhoneNumber || 'N/A'}`;
-            document.getElementById('employee-salary').textContent = `Salary: ${employee.employeeSalary || 'N/A'}`;
+        
+            
+            const employeeSalary = employee.Salary ? employee.Salary.toFixed(2) : 'N/A'; // Formatage du salaire
+            document.getElementById('employee-salary').textContent = `Salary: €${employeeSalary}`;
+            document.getElementById('employee-position').textContent = `Position: ${employee.PositionTitle || 'N/A'}`;
+        
+            
+            document.getElementById('employee-country').textContent = `Country: ${employee.employeeCountry || 'N/A'}`;
+            document.getElementById('employee-city').textContent = `City: ${employee.employeeCity || 'N/A'}`;
+            document.getElementById('employee-street1').textContent = `Street: ${employee.employeeStreet1 || 'N/A'}`;
+            document.getElementById('employee-appartement').textContent = `Apartment: ${employee.employeeAppartement || 'N/A'}`; 
+        
+            document.getElementById('employee-start-date').textContent = `Start Date: ${employee.employeeStartDate || 'N/A'}`;
+            document.getElementById('employee-end-date').textContent = `End Date: ${employee.employeeEndDate || 'N/A'}`;
         }
+        
+        
+        
 
         document.getElementById('sort-asc').addEventListener('click', () => {
             const search = document.getElementById('search-bar').value;
@@ -81,7 +106,6 @@
             fetchEmployees(order, search);
         });
 
-        // Fetch employees with default order on page load
         fetchEmployees();
     </script>
 </body>
