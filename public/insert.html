@@ -10,11 +10,49 @@
 <body>
     <h1>Formulaire d'Insertion</h1>
     <form action="insert.php" method="post">
-        <label for="country">Pays:</label>
-        <input type="text" id="country" name="country" required><br><br>
+        <label for="name">Nom:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="prenam">prenom:</label>
+        <input type="text" id="city" name="city" required><br><br>
+
+        <label>Sexe:</label><br>
+        <input type="radio" id="male" name="sex" value="Homme">
+        <label for="male">Homme</label><br>
+        <input type="radio" id="female" name="sex" value="Femme">
+        <label for="female">Femme</label><br><br>
 
         <label for="country">Pays:</label>
         <select id="country" name="country" required>
+            <option value="">Sélectionnez un pays</option>
+            <option value="France">France</option>
+            <option value="Allemagne">Allemagne</option>
+            <option value="Espagne">Espagne</option>
+            <option value="Italie">Italie</option>
+            <option value="Royaume-Uni">Royaume-Uni</option>
+            <option value="Belgique">Belgique</option>
+            <option value="Suisse">Suisse</option>
+            <option value="Canada">Canada</option>
+            <option value="États-Unis">États-Unis</option>
+            <option value="Australie">Australie</option>
+            <option value="Japon">Japon</option>
+            <option value="Chine">Chine</option>
+            <option value="Brésil">Brésil</option>
+            <option value="Inde">Inde</option>
+            <option value="Mexique">Mexique</option>
+        </select><br><br>
+
+        <label for="city">Ville:</label>
+        <input type="text" id="city" name="city" required><br><br>
+        
+        <label for="street1">Rue 1:</label>
+        <input type="text" id="street1" name="street1" required><br><br>
+        
+        <label for="appartement">Appartement:</label>
+        <input type="text" id="appartement" name="appartement"><br><br>
+
+        <label for="posts">post:</label>
+        <select id="posts" name="posts" required>
             <option value="">Sélectionnez un pays</option>
             <option value="Developer">Developer</option>
             <option value="Business Analyst">Business Analyst</option>
@@ -35,15 +73,9 @@
             <option value="Designer">Designer</option>
             <option value="Senior Developer">Senior Developer</option>
             <option value="IT Support">IT Support</option>
+            </select><br><br>
         
-        <label for="city">Ville:</label>
-        <input type="text" id="city" name="city" required><br><br>
         
-        <label for="street1">Rue 1:</label>
-        <input type="text" id="street1" name="street1" required><br><br>
-        
-        <label for="appartement">Appartement:</label>
-        <input type="text" id="appartement" name="appartement"><br><br>
         
         <input type="submit" value="Insérer">
     </form>
