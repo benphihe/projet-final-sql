@@ -24,6 +24,10 @@ app.get('/employees.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'employees.html'));
 });
 
+app.get('/insert', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'insert.html')); 
+});
+
 
 app.get('/api/employees', (req, res) => {
     const order = req.query.order === 'desc' ? 'DESC' : 'ASC';
