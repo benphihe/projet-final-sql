@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,24 +8,44 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bienvenue sur Mon Site Web</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="about.html">À propos</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Section Principale</h2>
-            <p>Ceci est le contenu principal de la page.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Mon Site Web. Tous droits réservés.</p>
-    </footer>
+    <h1>Formulaire d'Insertion</h1>
+    <form action="insert.php" method="post">
+        <label for="country">Pays:</label>
+        <input type="text" id="country" name="country" required><br><br>
+
+        <label for="country">Pays:</label>
+        <select id="country" name="country" required>
+            <option value="">Sélectionnez un pays</option>
+            <option value="Developer">Developer</option>
+            <option value="Business Analyst">Business Analyst</option>
+            <option value="UX/UI Designer">UX/UI Designer</option>
+            <option value="Operations Manager">Operations Manager</option>
+            <option value="Database Administrator">Database Administrator</option>
+            <option value="DevOps Engineer">DevOps Engineer</option>
+            <option value="Software Tester">Software Tester</option>
+            <option value="Technical Architect">Technical Architect</option>
+            <option value="Product Manager">Product Manager</option>
+            <option value="Chief Technology Officer">Chief Technology Officer</option>
+            <option value="Project Manager">Project Manager</option>
+            <option value="Sales Manager">Sales Manager</option>
+            <option value="Support Technician">Support Technician</option>
+            <option value="Team Lead">Team Lead</option>
+            <option value="HR Manager">HR Manager</option>
+            <option value="QA Engineer">QA Engineer</option>
+            <option value="Designer">Designer</option>
+            <option value="Senior Developer">Senior Developer</option>
+            <option value="IT Support">IT Support</option>
+        
+        <label for="city">Ville:</label>
+        <input type="text" id="city" name="city" required><br><br>
+        
+        <label for="street1">Rue 1:</label>
+        <input type="text" id="street1" name="street1" required><br><br>
+        
+        <label for="appartement">Appartement:</label>
+        <input type="text" id="appartement" name="appartement"><br><br>
+        
+        <input type="submit" value="Insérer">
+    </form>
 </body>
 </html>
