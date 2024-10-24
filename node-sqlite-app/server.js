@@ -26,24 +26,27 @@ app.get('/employees.html', (req, res) => {
 
 
 app.get('/api/employees', (req, res) => {
+    const order = req.query.order === 'desc' ? 'DESC' : 'ASC';
     const sql = `
         SELECT 
-            e.name AS employeName, 
-            e.gender AS employeGender, 
-            e.phoneNumber AS employePhoneNumber, 
-            p.Salary AS employeSalary
+            e.lastName AS employeeLastName,
+            e.firstName AS employeeFirstName
         FROM employees e
-        JOIN posts p ON e.postId = p.postId;
+        ORDER BY e.lastName ${order}
     `;
+
     db.all(sql, [], (err, rows) => {
         if (err) {
-            return res.status(500).send(err.message);
+            console.error('Erreur lors de l\'exécution de la requête SQL:', err.message);
+            res.status(500).json({ error: err.message });
+            return;
         }
+        console.log('Données récupérées:', rows);
         res.json(rows);
     });
 });
 
-// Démarrer le serveur
+
 app.listen(port, () => {
     console.log(`Serveur démarré sur http://localhost:${port}`);
 });

@@ -18,13 +18,14 @@ CREATE TABLE employements (
 );
 
 CREATE TABLE employees (
-    employeId TEXT PRIMARY KEY,
-    departementId TEXT,
-    adressId TEXT,
-    postId TEXT,
-    name TEXT,
-    gender BOOLEAN,
-    phoneNumber int,
+    employeId VARCHAR(10) PRIMARY KEY,
+    departementId VARCHAR(10),
+    adressId VARCHAR(10),
+    postId VARCHAR(10),
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
+    gender CHAR(1),
+    phoneNumber VARCHAR(15)
     FOREIGN KEY (departementId) REFERENCES departement(departementId),
     FOREIGN KEY (adressId) REFERENCES adress(adressId),
     FOREIGN KEY (postId) REFERENCES employement(postId)
@@ -158,25 +159,25 @@ ALTER TABLE employees ADD COLUMN name TEXT;
 ALTER TABLE employees ADD COLUMN gender TEXT;
 ALTER TABLE employees ADD COLUMN phoneNumber TEXT;
 
-INSERT INTO employees (employeId, departementId, adressId, postId, name, gender, phoneNumber)
+INSERT INTO employees (employeId, departementId, adressId, postId, firstName, lastName, gender, phoneNumber)
 VALUES
-('emp1', 'dept1', 'adr1', 'post1', 'Alice Dupont', 'F', '0601020301'),
-('emp2', 'dept2', 'adr2', 'post2', 'Bob Martin', 'M', '0601020302'),
-('emp3', 'dept3', 'adr3', 'post3', 'Claire Durand', 'F', '0601020303'),
-('emp4', 'dept4', 'adr4', 'post4', 'David Bernard', 'M', '0601020304'),
-('emp5', 'dept5', 'adr5', 'post5', 'Elise Fabre', 'F', '0601020305'),
-('emp6', 'dept6', 'adr6', 'post6', 'François Petit', 'M', '0601020306'),
-('emp7', 'dept7', 'adr7', 'post7', 'Gabrielle Simon', 'F', '0601020307'),
-('emp8', 'dept8', 'adr8', 'post8', 'Hugo Lefevre', 'M', '0601020308'),
-('emp9', 'dept9', 'adr9', 'post9', 'Isabelle Rousseau', 'F', '0601020309'),
-('emp10', 'dept10', 'adr10', 'post10', 'Jacques Moreau', 'M', '0601020310'),
-('emp11', 'dept11', 'adr11', 'post11', 'Karine Leroy', 'F', '0601020311'),
-('emp12', 'dept12', 'adr12', 'post12', 'Louis Girard', 'M', '0601020312'),
-('emp13', 'dept13', 'adr13', 'post13', 'Marie Rolland', 'F', '0601020313'),
-('emp14', 'dept14', 'adr14', 'post14', 'Nicolas Lucas', 'M', '0601020314'),
-('emp15', 'dept15', 'adr15', 'post15', 'Océane Gauthier', 'F', '0601020315'),
-('emp16', 'dept16', 'adr16', 'post16', 'Pierre Lambert', 'M', '0601020316'),
-('emp17', 'dept17', 'adr17', 'post17', 'Quentin Chevalier', 'M', '0601020317'),
-('emp18', 'dept18', 'adr18', 'post18', 'Roxane Moulin', 'F', '0601020318'),
-('emp19', 'dept19', 'adr19', 'post19', 'Stéphane Lefort', 'M', '0601020319'),
-('emp20', 'dept20', 'adr20', 'post20', 'Valérie Michel', 'F', '0601020320');
+('emp1', 'dept1', 'adr1', 'post1', 'Alice', 'Dupont', 'F', '0601020301'),
+('emp2', 'dept2', 'adr2', 'post2', 'Bob', 'Martin', 'M', '0601020302'),
+('emp3', 'dept3', 'adr3', 'post3', 'Claire', 'Durand', 'F', '0601020303'),
+('emp4', 'dept4', 'adr4', 'post4', 'David', 'Bernard', 'M', '0601020304'),
+('emp5', 'dept5', 'adr5', 'post5', 'Elise', 'Fabre', 'F', '0601020305'),
+('emp6', 'dept6', 'adr6', 'post6', 'François', 'Petit', 'M', '0601020306'),
+('emp7', 'dept7', 'adr7', 'post7', 'Gabrielle', 'Simon', 'F', '0601020307'),
+('emp8', 'dept8', 'adr8', 'post8', 'Hugo', 'Lefevre', 'M', '0601020308'),
+('emp9', 'dept9', 'adr9', 'post9', 'Isabelle', 'Rousseau', 'F', '0601020309'),
+('emp10', 'dept10', 'adr10', 'post10', 'Jacques', 'Moreau', 'M', '0601020310'),
+('emp11', 'dept11', 'adr11', 'post11', 'Karine', 'Leroy', 'F', '0601020311'),
+('emp12', 'dept12', 'adr12', 'post12', 'Louis', 'Girard', 'M', '0601020312'),
+('emp13', 'dept13', 'adr13', 'post13', 'Marie', 'Rolland', 'F', '0601020313'),
+('emp14', 'dept14', 'adr14', 'post14', 'Nicolas', 'Lucas', 'M', '0601020314'),
+('emp15', 'dept15', 'adr15', 'post15', 'Océane', 'Gauthier', 'F', '0601020315'),
+('emp16', 'dept16', 'adr16', 'post16', 'Pierre', 'Lambert', 'M', '0601020316'),
+('emp17', 'dept17', 'adr17', 'post17', 'Quentin', 'Chevalier', 'M', '0601020317'),
+('emp18', 'dept18', 'adr18', 'post18', 'Roxane', 'Moulin', 'F', '0601020318'),
+('emp19', 'dept19', 'adr19', 'post19', 'Stéphane', 'Lefort', 'M', '0601020319'),
+('emp20', 'dept20', 'adr20', 'post20', 'Valérie', 'Michel', 'F', '0601020320');

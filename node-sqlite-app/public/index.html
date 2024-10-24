@@ -3,41 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees</title>
+    <title>Employees Manager</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Employees</h1>
-    <table id="employees-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Phone Number</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
-            
-        </tbody>
-    </table>
+    <header>
+        <h1>Employees Manager</h1>
+    </header>
+    <main>
+        <h2>Employees List</h2>
+        <div>
+            <button id="sort-asc">Sort by Last Name (A-Z)</button>
+            <button id="sort-desc">Sort by Last Name (Z-A)</button>
+        </div>
+        <table id="employees-table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </main>
     <script>
-        fetch('/api/employees')
-            .then(response => response.json())
-            .then(data => {
-                const tableBody = document.querySelector('#employees-table tbody');
-                data.forEach(employee => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${employee.employeName}</td>
-                        <td>${employee.employeGender}</td>
-                        <td>${employee.employePhoneNumber}</td>
-                        <td>${employee.employeSalary}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching employee data:', error));
+        function fetchEmployees(order = 'asc') {
+            fetch(`/api/employees?order=${order}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#employees-table tbody');
+                    tableBody.innerHTML = ''; // Clear existing rows
+                    data.forEach(employee => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${employee.employeeFirstName}</td>
+                            <td>${employee.employeeLastName}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching employee data:', error));
+        }
+
+        document.getElementById('sort-asc').addEventListener('click', () => fetchEmployees('asc'));
+        document.getElementById('sort-desc').addEventListener('click', () => fetchEmployees('desc'));
+        
+        fetchEmployees();
     </script>
 </body>
 </html>
